@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ in_array(app()->getLocale(), ['ar', 'fa', 'ps']) ? 'rtl' : 'ltr' }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ in_array(app()->getLocale(), ['ar', 'en']) ? 'rtl' : 'ltr' }}" class="dark">
 
     <head>
         <meta charset="utf-8">
@@ -16,7 +16,7 @@
         <!-- Styles and Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+        @yield('styles')
 
     </head>
 
@@ -49,5 +49,5 @@
             </div>
         </div>
     </body>
-
+@yield('scripts')
 </html>
