@@ -41,4 +41,11 @@ class BrandController extends Controller
         $brands = Brand::all();
         return $brands;
     }
+
+    public function delete()
+    {
+        $item = Brand::where('id', '4');
+        $item->delete();
+        return 'deleted successfully';
+    }
 }

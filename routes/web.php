@@ -16,4 +16,8 @@ Route::get('add_data',[BrandController::class,'addData']);
 
 Route::get("get_data",[BrandController::class,'getData']);
 
+Route::get('delete', [BrandController::class, 'delete']);
+
 Route::get("get_product",[ProductController::class,'index']);
+
+Route::get("det_draft",[ProductController::class,'getDraft']);

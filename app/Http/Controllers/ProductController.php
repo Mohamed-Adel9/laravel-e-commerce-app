@@ -19,4 +19,11 @@ class ProductController extends Controller
         return $items;
 
     }
+
+    public function getDraft()
+    {
+        $item = Product::draft()->get();
+
+        return $item;
+    }
 }

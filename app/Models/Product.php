@@ -9,4 +9,9 @@ class Product extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
+
+    public function scopeDraft($query)
+    {
+        return $query->where('status', 'draft');
+    }
 }
