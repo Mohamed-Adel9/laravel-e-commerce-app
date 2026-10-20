@@ -9,7 +9,7 @@
     </div>
 
     <div>
-        <a style="#" href="{{ url('brands/create') }}">Create New</a>
+        <a style="btn-primary" href="{{ url('brands/create') }}">Create New</a>
     </div>
 
     <div class="table-card">
