@@ -16,7 +16,7 @@
 
         <form action="" method="GET">
             <input type="text" name="search_field" class="form-control" value="{{ request('search_field') }}" />
-            <button type="submit">Search</button>
+            <button class="btn-primary" type="submit">Search</button>
         </form>
 
 
@@ -33,16 +33,16 @@
                 @foreach ($categories as $category)
                     <tr>
 
-                            <td>
-                                <img src="{{ $category->image }}" style="width: 50px" />
-                            </td>
-                            <td>
-                                <div class="user-name">{{ $category->name }}</div>
-                                <div class="text-secondary text-xs">{{ $category->slug }}</div>
-                            </td>
-                            <td class="text-secondary text-sm">
-                                {{ $category->created_at }}
-                            </td>
+                        <td>
+                            <img src="{{asset('storage/'.$category->image) }}" style="width: 50px" />
+                        </td>
+                        <td>
+                            <div class="user-name">{{ $category->name }}</div>
+                            <div class="text-secondary text-xs">{{ $category->slug }}</div>
+                        </td>
+                        <td class="text-secondary text-sm">
+                            {{ $category->created_at }}
+                        </td>
 
 
 
@@ -66,6 +66,7 @@
             </tbody>
         </table>
 
+        {{ $categories->appends(request()->query())->links('pagination::bootstrap-5') }}
 
     </div>
 @endsection

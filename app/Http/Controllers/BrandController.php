@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
     //
-     /**
+    /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $brands = Brand::all();
+        $brands = Brand::when($request->search_field, function ($query) use ($request) {
+            return $query->whereAny([
+                'name',
+                'slug',
+            ], 'like', '%' . $request->search_field . '%');
+        })->paginate(10);
         return view('brands.index', compact('brands'));
     }
 
@@ -23,10 +29,14 @@ class BrandController extends Controller
      */
     public function create(Request $request)
     {
+        $path = '';
+        if($request->hasFile('image')){
+            $path= $request->file('image')->store('brands','public');
+        }
         $item = new Brand();
         $item->name = $request->name;
         $item->slug = $request->slug;
-        $item->image = " ";
+        $item->image = $path;
         $item->save();
 
         return back();
@@ -64,7 +74,19 @@ class BrandController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $item =Brand::where('id', $id)->first();
+        $path = ' ';
+        $item = Brand::where('id', $id)->first();
+
+        if($request->hasFile('image')){
+            if($item->image){
+                Storage::disk('public')->delete($item->image);
+            }
+            $path= $request->file('image')->store('brands','public');
+            $item->image= $path;
+        }
+
+
+
         $item->name = $request->name;
         $item->slug = $request->slug;
         $item->update();
@@ -78,6 +100,11 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         $brand = Brand::where('id', $id)->first();
+
+        if($brand->image){
+            Storage::disk('public')->delete($brand->image);
+        }
+
         $brand->delete();
 
         return back();

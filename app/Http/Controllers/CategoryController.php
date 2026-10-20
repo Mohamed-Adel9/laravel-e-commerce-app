@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -12,10 +13,16 @@ class CategoryController extends Controller
      /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $categories = Category::all();
+        $categories = Category::when($request->search_field , function($query) use ($request){
+        $query->whereAny([
+            'name',
+            'slug',
+            ] 
+            , 'like','%'.$request->search_field.'%');
+        })->paginate(10);
         return view('categories.index', compact('categories'));
     }
 
@@ -24,10 +31,14 @@ class CategoryController extends Controller
      */
     public function create(Request $request)
     {
+        $path = '';
+        if($request->hasFile('image')){
+            $path= $request->file('image')->store('categories','public');
+        }
         $item = new Category();
         $item->name = $request->name;
         $item->slug = $request->slug;
-        $item->image = " ";
+        $item->image = $path;
         $item->save();
 
         return back();
@@ -65,7 +76,17 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $path = '';
         $item =Category::where('id', $id)->first();
+
+        if($request->hasFile('image')){
+            if($item->image){
+                Storage::disk('public')->delete($item->image);
+            }
+            $path= $request->file('image')->store('categories','public');
+            $item->image = $path;
+        }
+
         $item->name = $request->name;
         $item->slug = $request->slug;
         $item->update();
@@ -79,6 +100,9 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $category = Category::where('id', $id)->first();
+        if($category->image){
+            Storage::disk('public')->delete($category->image);
+        }
         $category->delete();
 
         return back();

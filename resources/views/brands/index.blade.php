@@ -14,9 +14,9 @@
 
     <div class="table-card">
 
-        <form action="" method="GET">
+        <form action="{{ url('brands') }}" method="GET">
             <input type="text" name="search_field" class="form-control" value="{{ request('search_field') }}" />
-            <button type="submit">Search</button>
+            <button class="btn-primary mt-3 ml-2" type="submit">Search</button>
         </form>
 
 
@@ -34,7 +34,7 @@
                     <tr>
 
                             <td>
-                                <img src="{{ $brand->image }}" style="width: 50px" />
+                            <img src="{{asset('storage/'.$brand->image) }}" style="width: 50px" />
                             </td>
                             <td>
                                 <div class="user-name">{{ $brand->name }}</div>
@@ -65,7 +65,7 @@
 
             </tbody>
         </table>
-
+            {{$brands->appends(request()->query())->links('pagination::bootstrap-5')}}
 
     </div>
 @endsection

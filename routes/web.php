@@ -14,7 +14,7 @@ Route::prefix('brands')->group(function () {
     Route::view('create', 'brands.add');
     Route::post('add', [BrandController::class, 'create']);
     Route::get('edit/{id}', [BrandController::class, 'edit'])->name('brands.edit');
-    Route::post('update/{id}', [BrandController::class, 'update'])->name('brands.update');
+    Route::put('update/{id}', [BrandController::class, 'update'])->name('brands.update');
     Route::delete('destroy/{id}',[BrandController::class,'destroy'])->name('brands.destroy');
 });
 
