@@ -55,12 +55,12 @@
                     x-transition:enter-start="transform opacity-0 scale-95 translate-y-2" x-transition:enter-end="transform opacity-100 scale-100 translate-y-0"
                     x-transition:leave="transition ease-in duration-150" x-transition:leave-start="transform opacity-100 scale-100 translate-y-0"
                     x-transition:leave-end="transform opacity-0 scale-95 translate-y-2" class="navbar-dropdown">
-                    <div class="dropdown-header">
+                    {{-- <div class="dropdown-header">
                         <p class="dropdown-header-label">Authenticated as</p>
                         {{-- <p class="dropdown-header-value">{{ Auth::user()->name }}</p> --}}
-                    </div>
+                    {{-- </div> --}}
 
-
+{{-- 
                     <a href="#" class="dropdown-item">
                         <svg class="dropdown-item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -68,7 +68,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         Settings
-                    </a>
+                    </a> --}}
 
                     <div class="dropdown-sep"></div>
 
