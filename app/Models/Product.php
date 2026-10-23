@@ -29,26 +29,21 @@ class Product extends Model
         'created_by',
     ];
 
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
+   public function brand(){
+    return $this->belongsTo(Brand::class,'brand_id');
+   }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+    public function category(){
+    return $this->belongsTo(Category::class,'category_id');
+   }
+    
+   public function creator (){
+    return $this->belongsTo(User::class ,'created_by');
+   }
 
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function images()
-    {
-        return $this->hasMany(ProductImage::class);
-    }
-
+   public function images(){
+    return $this->hasMany(ProductImage::class, "product_id");
+   }
 
     public function scopeDraft($query)
     {

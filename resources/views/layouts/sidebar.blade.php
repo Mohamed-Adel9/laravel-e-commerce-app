@@ -1,4 +1,4 @@
-<aside :class="sidebarOpen ? 'w-[var(--sidebar-width-expanded)]' : 'w-[var(--sidebar-width-collapsed)]'"
+<aside :style="{ width: sidebarOpen ? '15rem' : '4.5rem' }"
     class="sidebar-container sidebar-transition glass-panel hidden lg:flex">
     <!-- Brand -->
     <div class="sidebar-brand group">

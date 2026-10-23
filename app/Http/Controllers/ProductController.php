@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -37,25 +38,9 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $data = $request->validate([
-            'brand_id' => 'required|exists:brands,id',
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:products,slug',
-            'regular_price' => 'required|numeric|min:0',
-            'sale_price' => 'nullable|numeric|min:0',
-            'sku' => 'nullable|string|max:255',
-            'stock_quantity' => 'nullable|integer|min:0',
-            'stock_status' => 'required|string|in:in_stock,out_of_stock',
-            'featured' => 'required|string|in:yes,no',
-            'description' => 'nullable|string',
-            'status' => 'required|string|in:draft,active,inactive',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-        ]);
+    
         $data['slug'] = $request->slug ? Str::slug($request->slug) : Str::slug($request->name);
         $data['created_by'] = Auth::id();
 
@@ -104,9 +89,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $products = Product::with('brand','category','creator','images')->get();
+        return $products ;
     }
 
     /**

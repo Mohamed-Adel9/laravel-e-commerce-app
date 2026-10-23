@@ -18,4 +18,8 @@ class Brand extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function products()
+    {
+        return $this->hasMany(Product::class,'brand_id');
+    }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="" 
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +20,7 @@
     </head>
 
     <body class="antialiased bg-mesh text-slate-100 min-h-screen overflow-x-hidden" x-data="{ sidebarOpen: true, mobileOpen: false }">
-        <div class="flex h-screen">
+        <div class="app-layout">
             <!-- Sidebar -->
             @include('layouts.sidebar')
 
@@ -30,13 +30,10 @@
                 x-transition:leave="transition opacity-100 duration-300" x-transition:leave-end="opacity-0"></div>
 
             <!-- Main Wrapper -->
-            <div class="flex flex-col flex-1 min-w-0">
-                <!-- Navbar -->
-                @include('layouts.navbar')
-
+            <div class="app-main">
                 <!-- Content Area -->
-                <main class="flex-1 overflow-y-auto px-4 py-8 lg:px-10">
-                    <div class="max-w-[1600px] mx-auto">
+                <main class="app-content">
+                    <div class="app-content-inner">
                         @yield('content')
                     </div>
 
@@ -47,6 +44,6 @@
                 </main>
             </div>
         </div>
+        @yield('scripts')
     </body>
-@yield('scripts')
 </html>
